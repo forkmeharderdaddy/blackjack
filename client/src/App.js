@@ -198,7 +198,7 @@ class App extends Component {
         if (this.state.splitHandScore > 21) {var splitHandStatus = " - Busted!";}
         if (playSplitHand) {
             splitPlayerScore = <td><i>Split Hand Score: {this.state.splitHandScore}<b>{splitHandStatus}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
-            splitPlayerBet = <td><i>Bet: {parseInt(this.state.splitBet) + parseInt(this.state.splitDoubleDownBet)} wei&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
+            splitPlayerBet = <td><i>Bet: {parseInt(this.state.splitBet) + parseInt(this.state.splitDoubleDownBet)} PEPL&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
         }
 
         const canDoubleDown = ((this.state.playerHand.length === 2) || (this.state.splitHand.length === 2));
@@ -253,12 +253,12 @@ class App extends Component {
         if (playHand) {
             dealerScore = <td><i>Dealer Score: {this.state.dealerScore}<b>{dealerStatus}</b></i></td>;
             playerScore = <td><i>Hand Score: {this.state.handScore}<b>{handStatus}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
-            playerBet = <td><i>Bet: {parseInt(this.state.bet) + parseInt(this.state.doubleDownBet)} wei&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
+            playerBet = <td><i>Bet: {parseInt(this.state.bet) + parseInt(this.state.doubleDownBet)} PEPL&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
         }
 
         return (
                 <div className="App">
-                <h1>Blackjack dApp</h1>
+                <h1>PepePal BlackJack</h1>
 
                 <h3>Dealer:</h3>
 
@@ -289,10 +289,10 @@ class App extends Component {
 
                 <br/><br/>
 
-            Place your bet: <input value={this.state.betSize} onChange={this.onChange}/> wei &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Place your bet: <input value={this.state.betSize} onChange={this.onChange}/> PEPL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button onClick={this.newRound.bind(this)}>Deal</button>
                 <br/>
-                <div> Maximum bet: {this.state.maxBet} wei</div>
+                <div> Maximum bet: {this.state.maxBet} PEPL</div>
                 <br/>
                 <i>(connected account: {this.state.playerAccount})</i>
 

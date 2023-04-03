@@ -49,7 +49,7 @@ contract Blackjack is Ownable, usingProvable {
     mapping(address => Game) games;
     string private randomCards;
     uint256 seed;
-    uint256 maxBet; // used for bet (risk) optimization
+    uint256 maxBet;// used for bet (risk) optimization
     bool stopLoss; // used for circuit breaker
     uint8 lossCounter;
     uint8 lossLimit = 20; // consecutive losses
@@ -75,7 +75,7 @@ contract Blackjack is Ownable, usingProvable {
     receive() external payable {
         emit Received(msg.sender, msg.value);
 
-        maxBet = SafeMath.div(address(this).balance, 200);
+        maxBet = SafeMath.div(address(this).balance, 2);
     }
 
     /// @dev [Module 10, Lesson 1] Action restriction on critical function
