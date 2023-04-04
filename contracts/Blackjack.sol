@@ -1,17 +1,20 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: Frensware
 pragma solidity 0.6.12;
 
 import "./provableAPI.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
-//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.2.0/contracts/access/Ownable.sol";
-//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.2.0/contracts/math/SafeMath.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/math/SafeMath.sol";
+
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.2.0/contracts/access/Ownable.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.2.0/contracts/math/SafeMath.sol";
 
 
 /// @title A blackjack game
 /// @author Clark Henry
 /// @notice This contract has known security risks and should not be deployed in production
-contract Blackjack is Ownable, usingProvable {
+contract Blackjack is Ownable, usingProvable, ReentrancyGuard {
 
     using SafeMath for *;
 
@@ -81,9 +84,10 @@ contract Blackjack is Ownable, usingProvable {
     /// @dev [Module 10, Lesson 1] Action restriction on critical function
     /// @dev [Module 10, Lesson 1] Mortality
     /// @dev [Library used] Ownable library from OpenZeppelin is imported and used here.
-    function kill() public onlyOwner() {
-        selfdestruct(address(uint160(owner())));
-    }
+    function withdraw(uint256 amount) public onlyOwner {
+    require(amount <= address(this).balance, "Requested amount exceeds available balance.");
+    msg.sender.transfer(amount);
+}
 
     /// @dev [Module 10, Lesson 1] Circuit breakers implemented here
     modifier stopInEmergency() { require(!stopLoss, "Circuit breaker triggered"); _; }
@@ -131,7 +135,7 @@ contract Blackjack is Ownable, usingProvable {
     /// @dev [Module 10, Lesson 1] Circuit breakers implemented here
     /// @dev seed should not be based on timestamp. This is a security risk and placeholder for now
     /// @dev Plan to split this into multiple functions such that placing bet is atomic before proceeding
-    function newRound() public payable stopInEmergency {
+    function newRound() public payable stopInEmergency nonReentrant {
         require(msg.value <= maxBet, "Bet must be less than the max bet.");
 
         uint256 _seed;
@@ -209,7 +213,7 @@ contract Blackjack is Ownable, usingProvable {
 
     /// @notice Split first two cards into two hands, drawing one additional card for each. An equivalent bet value is required.
     /// @dev not working correctly on last check - the require for bet size was reverting
-    function split() public payable atStage(Stage.PlayHand) {
+    function split() public payable atStage(Stage.PlayHand) nonReentrant {
 
         Game storage game = games[msg.sender];
 
@@ -235,7 +239,7 @@ contract Blackjack is Ownable, usingProvable {
     /// @notice Double down on first two cards, taking one additional card and standing, with an opportunity to double original bet.
     /// @dev is this vulnerable to OOG leaking drawn card info?
     /// @dev [Module 9, Lesson 3] Preventing integer overflow with SafeMath
-    function doubleDown() public payable eitherStage(Stage.PlayHand, Stage.PlaySplitHand) {
+    function doubleDown() public payable eitherStage(Stage.PlayHand, Stage.PlaySplitHand) nonReentrant {
         Game storage game = games[msg.sender];
 
         require((game.player.hand.length == 2 && game.stage == Stage.PlayHand) ||
