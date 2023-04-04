@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 // <provableAPI>
 /*
 Copyright (c) 2015-2016 Oraclize SRL
