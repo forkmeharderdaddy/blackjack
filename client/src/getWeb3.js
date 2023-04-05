@@ -10,7 +10,16 @@ const getWeb3 = () =>
         try {
           // Request account access if needed
           await window.ethereum.enable();
-          // Acccounts now exposed
+          
+          await web3.eth.net.getId().then(async (chainId) => {
+            if (chainId !== 5) {
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x5' }], 
+              });
+            }
+          });
+
           resolve(web3);
         } catch (error) {
           reject(error);
@@ -26,7 +35,7 @@ const getWeb3 = () =>
       // Fallback to localhost; use dev console port by default...
       else {
         const provider = new Web3.providers.HttpProvider(
-          "https://goerli.infura.io/v3" // "http://127.0.0.1:8545"
+          "http://127.0.0.1:8545"
         );
         const web3 = new Web3(provider);
         console.log("No web3 instance injected, using Local web3.");
