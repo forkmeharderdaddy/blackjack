@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BlackjackContract from "./contracts/Blackjack.json";
 import getWeb3 from "./getWeb3";
+import contract from "./contract.js";
 
 import "./App.css";
 
@@ -28,10 +29,11 @@ class App extends Component {
 
             // Get the contract instance.
             const networkId = await web3.eth.net.getId();
-            const gameNetwork = BlackjackContract.networks[networkId];
+          //  const gameNetwork = BlackjackContract.networks[networkId];
+            const deployedAddress = contract.contractAddress[networkId];
             const gameInstance = new web3.eth.Contract(
                 BlackjackContract.abi,
-                gameNetwork && gameNetwork.address,
+                 deployedAddress // && gameNetwork.address,
             );
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
