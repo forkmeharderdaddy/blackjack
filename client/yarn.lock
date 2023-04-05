@@ -9385,6 +9385,7 @@ scrypt-js@2.0.3:
 "scrypt-shim@github:web3-js/scrypt-shim":
   version "0.1.0"
   resolved "git+ssh://git@github.com/web3-js/scrypt-shim.git#be5e616323a8b5e568788bf94d03c1b8410eac54"
+  integrity sha512-PQGxuyPidI88bQMJ/fF2tzwkTF4YzzfhoYQNexgJXNdt+YJd6ceH5ScQa1OJNWbMGOi1PlXbxTaDOdPGckPEHw==
   dependencies:
     scryptsy "^2.1.0"
     semver "^6.3.0"
@@ -10459,6 +10460,11 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typescript@*, "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+  version "5.0.3"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-5.0.3.tgz"
+  integrity sha512-xv8mOEDnigb/tN9PSMTwSEqAnUvkoXMQlicOb0IUVDBSQCgBSaAAROUZYy2IcUy5qU6XajK5jjjO7TMWqBTKZA==
+
 uglify-js@^3.1.4, uglify-js@3.4.x:
   version "3.4.10"
   resolved "https://registry.npmjs.org/uglify-js/-/uglify-js-3.4.10.tgz"
@@ -11136,6 +11142,7 @@ websocket-extensions@>=0.1.1:
 "websocket@github:web3-js/WebSocket-Node#polyfill/globalThis":
   version "1.0.29"
   resolved "git+ssh://git@github.com/web3-js/WebSocket-Node.git#905deb4812572b344f5801f8c9ce8bb02799d82e"
+  integrity sha512-t3z6NLuJsNkGiKb3PoOx6p6eMTu7Ljkcwgtveqd4aWXnSZBJHbXljdF6rYSSNUW96Q+ciZW5Vunck0i23wDwWQ==
   dependencies:
     debug "^2.2.0"
     es5-ext "^0.10.50"
