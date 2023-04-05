@@ -15,7 +15,7 @@ const getWeb3 = () =>
             if (chainId !== 5) {
               await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x5' }], 
+                params: [{ chainId: 5 }], 
               });
             }
           });

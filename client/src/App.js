@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import BlackjackContract from "./Blackjack.json";
+import { contractABI, contractAddress } from "./config";
+ // import BlackjackContract from "./Blackjack.json";
 import getWeb3 from "./getWeb3";
-import contract from "./contract.js";
 
 import "./App.css";
 
@@ -28,13 +28,9 @@ class App extends Component {
             var playerAccount = web3.currentProvider.selectedAddress;
 
             // Get the contract instance.
-            const networkId = await web3.eth.net.getId();
-          //  const gameNetwork = BlackjackContract.networks[networkId];
-            const deployedAddress = contract.contractAddress[networkId];
-            const gameInstance = new web3.eth.Contract(
-                BlackjackContract.abi,
-                 deployedAddress // && gameNetwork.address,
-            );
+            const gameInstance = new web3.eth.Contract(contractABI, contractAddress);
+
+            
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
             const responseGame = await gameInstance.methods.getGameState().call();
@@ -200,7 +196,7 @@ class App extends Component {
         if (this.state.splitHandScore > 21) {var splitHandStatus = " - Busted!";}
         if (playSplitHand) {
             splitPlayerScore = <td><i>Split Hand Score: {this.state.splitHandScore}<b>{splitHandStatus}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
-            splitPlayerBet = <td><i>Bet: {parseInt(this.state.splitBet) + parseInt(this.state.splitDoubleDownBet)} PEPL&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
+            splitPlayerBet = <td><i>Bet: {parseInt(this.state.splitBet) + parseInt(this.state.splitDoubleDownBet)} wei&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
         }
 
         const canDoubleDown = ((this.state.playerHand.length === 2) || (this.state.splitHand.length === 2));
@@ -255,12 +251,12 @@ class App extends Component {
         if (playHand) {
             dealerScore = <td><i>Dealer Score: {this.state.dealerScore}<b>{dealerStatus}</b></i></td>;
             playerScore = <td><i>Hand Score: {this.state.handScore}<b>{handStatus}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
-            playerBet = <td><i>Bet: {parseInt(this.state.bet) + parseInt(this.state.doubleDownBet)} PEPL&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
+            playerBet = <td><i>Bet: {parseInt(this.state.bet) + parseInt(this.state.doubleDownBet)} wei&nbsp;&nbsp;&nbsp;&nbsp;</i></td>;
         }
 
         return (
                 <div className="App">
-                <h1>PepePal BlackJack</h1>
+                <h1>Blackjack dApp</h1>
 
                 <h3>Dealer:</h3>
 
@@ -291,10 +287,10 @@ class App extends Component {
 
                 <br/><br/>
 
-            Place your bet: <input value={this.state.betSize} onChange={this.onChange}/> PEPL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Place your bet: <input value={this.state.betSize} onChange={this.onChange}/> wei &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button onClick={this.newRound.bind(this)}>Deal</button>
                 <br/>
-                <div> Maximum bet: {this.state.maxBet} PEPL</div>
+                <div> Maximum bet: {this.state.maxBet} wei</div>
                 <br/>
                 <i>(connected account: {this.state.playerAccount})</i>
 
