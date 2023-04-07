@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import BlackjackContract from "./Blackjack.json";
 import getWeb3 from "./getWeb3";
+import drizzleOptions from "./drizzleOptions";
+
 
 import "./App.css";
 
