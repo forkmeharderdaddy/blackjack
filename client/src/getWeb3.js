@@ -35,7 +35,7 @@ const getWeb3 = () =>
       // Fallback to localhost; use dev console port by default...
       else {
         const provider = new Web3.providers.HttpProvider(
-          "http://127.0.0.1:8545"
+          "https://goerli.infura.io/v3/"
         );
         const web3 = new Web3(provider);
         console.log("No web3 instance injected, using Local web3.");
